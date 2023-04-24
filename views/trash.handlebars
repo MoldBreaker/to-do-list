@@ -1,0 +1,50 @@
+<h1>Your Trash Bin</h1>
+<a href="/">back</a> 
+
+<br>
+
+<table width="50%" border="1">
+    <tr>
+        <th>Id</th>
+        <th>Name Task</th>
+        <th>Note</th>
+        <th>deletedAt</th>
+        <th>Restore</th>
+        <th>Force Delete</th>
+    </tr>
+    {{#each result}}
+    <tr>
+        <td>{{this.id}}</td>
+        <td>{{this.name}}</td>
+        <td>{{this.note}}</td>
+        <td>{{this.deletedAt}}</td>
+        <td>
+            <a href="/restore/{{this.id}}">restore</a>
+        </td>
+        <td>
+            <a id="force-delete" data-id="{{this.id}}" data-name="{{this.name}}" href="" onclick="confirmDelete(this)">force delete</a>
+        </td>
+    </tr>
+    {{/each}}
+</table>
+
+<form id="force-delete-form" method="GET"></form>
+
+<script>
+    var forceDelete = document.querySelector('.force-delete');
+    var forceDeleteForm = document.querySelector('#force-delete-form');
+
+    function confirmDelete(data) {
+        var id = data.getAttribute('data-id');
+        var name = data.getAttribute('data-name');
+        var action = "/force-delete/" + id;
+        forceDeleteForm.setAttribute("action", action);
+
+        if (confirm('Are you sure you want to delete ' + name + '?') == true) {
+            event.preventDefault();
+            forceDeleteForm.submit();
+        }
+        
+    }
+
+</script>

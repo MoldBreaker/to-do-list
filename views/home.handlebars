@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do list</title>
+</head>
+<body>
+    <h1>My ToDoList</h1>
+    <h3>Your Personal schedule</h3>
+    <a href="/stored">Look your schedule in JSON</a> <br>
+    <a href="/trash">trash bin</a> <br>
+    <a href="/done">completed tasks</a>
+    <form method="POST" action="/create-one">
+        Task name: <input type="text" name="name"> <br>
+        Note <input type="text" name="note"> <br>
+        <button>Create</button>
+    </form>
+    <table width="50%" border="1">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Note</th>
+            <th>createdAt</th>
+            <th>updatedAt</th>
+            <th>Edit</th>
+            <th>Remove</th>
+            <th>Done</th>
+        </tr>
+        {{#each tasks}}
+            <tr>
+                <td>{{this.id}}</td>
+                <td>{{this.name}}</td>
+                <td>{{this.note}}</td>
+                <td>{{this.createdAt}}</td>
+                <td class="updated-at">
+                    {{this.updatedAt}}
+                </td>
+                <td>
+                    <a href="/edit/{{this.id}}">Edit</a>
+                </td>
+                <td>
+                    <form method="POST" action="/remove/{{this.id}}">
+                        <button>Remove</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="POST" action="/set-done/{{this.id}}">
+                        <button>Done</button>
+                    </form>
+                </td>
+            </tr>
+        {{/each}}
+    </table>
+</body>
+
+<script>
+    var updatedAt = document.querySelectorAll('.updated-at');
+    for(let i=0;i<updatedAt.length;i++){
+        if(updatedAt[i].innerText == ''){
+            updatedAt[i].innerText = 'None';
+        } 
+    }
+</script>
+
+</html> 
